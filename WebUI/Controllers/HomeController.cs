@@ -27,7 +27,7 @@ namespace WebUI.Controllers
 			return Content(_courseService.Add(
 				new Course 
 				{
-					CategoryId = 1, Description = "awfw", ImagePath = "qfw", Price = 1131, Title = "aa1qgqege412421" 
+					CategoryId = 1, Description = "awfw", ImagePath = "qfw", Price = 0, Title = "ae21" 
 				}
 				).Message);
 		}

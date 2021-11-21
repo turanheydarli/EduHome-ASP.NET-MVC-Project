@@ -1,4 +1,7 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Validation.FluentValidation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -17,6 +20,7 @@ namespace Business.Concrete
 		{
 			_courseDal = courseDal;
 		}
+		[ValidationAspect(typeof(CourseValidator))]
 		public IResult Add(Course course)
 		{
 			_courseDal.Add(course);
