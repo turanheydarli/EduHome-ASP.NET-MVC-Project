@@ -13,5 +13,7 @@ namespace Business.Abstract
 		IResult Add(Blog blog);
 		IResult Update(Blog blog);
 		IResult Delete(Blog blog);
+		Task<IDataResult<List<Blog>>> GetAllAsync();
+		Task<IDataResult<Blog>> GetByIdAsync(int id);
 	}
 }

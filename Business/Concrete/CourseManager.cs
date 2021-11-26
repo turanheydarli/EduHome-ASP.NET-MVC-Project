@@ -20,6 +20,7 @@ namespace Business.Concrete
 		{
 			_courseDal = courseDal;
 		}
+
 		[ValidationAspect(typeof(CourseValidator))]
 		public IResult Add(Course course)
 		{
@@ -31,6 +32,20 @@ namespace Business.Concrete
 		{
 			_courseDal.Delete(course);
 			return new SuccessResult("Course Added");
+		}
+
+		public async Task<IDataResult<List<Course>>> GetAllAsync()
+		{
+			var result = await _courseDal.GetAllAsync();
+
+			return new SuccessDataResult<List<Course>>(result);
+		}
+
+		public async Task<IDataResult<Course>> GetByIdAsync(int id)
+		{
+			var result = await _courseDal.GetAsync(s => s.Id == id);
+
+			return new SuccessDataResult<Course>(result);
 		}
 
 		public IResult Update(Course course)

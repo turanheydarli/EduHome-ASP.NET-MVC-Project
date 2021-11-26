@@ -1,0 +1,32 @@
+﻿@model List<SliderContent>
+
+<div class="slider-owl owl-theme owl-carousel">
+
+	@foreach (SliderContent slider in Model)
+	{
+		<!-- Start Slingle Slide -->
+		<div class="single-slide item" style="background-image: url(../assets/img/slider/@slider.ImagePath">
+			<!-- Start Slider Content -->
+			<div class="slider-content-area">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-7">
+							<div class="slide-content-wrapper">
+								<div class="slide-content">
+									<h3>@slider.Title</h3>
+									<p>@slider.Description</p>
+									<a class="default-btn" href="about.html">Learn more</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Start Slider Content -->
+		</div>
+		<!-- End Slingle Slide -->
+	}
+
+</div>
+
+
