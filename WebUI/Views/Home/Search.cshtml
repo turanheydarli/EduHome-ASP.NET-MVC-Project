@@ -1,0 +1,11 @@
+﻿@model SearchViewModel
+@{
+	Layout = null;
+}
+
+<ul>
+	@foreach (Course course in Model.Courses)
+	{
+		<li class="mb-1"><a asp-controller="course" asp-action="detail" asp-route-id="@course.Id">@course.Title</a></li>
+	}
+</ul>

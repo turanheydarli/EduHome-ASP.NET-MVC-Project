@@ -13,5 +13,6 @@ namespace Business.Abstract
 		IResult Add(CourseDetail courseDetail);
 		IResult Update(CourseDetail courseDetail);
 		IResult Delete(CourseDetail courseDetail);
+		Task<IDataResult<CourseDetail>> GetByCourseIdAsync(int courseId);
 	}
 }

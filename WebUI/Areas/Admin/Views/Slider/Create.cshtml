@@ -1,0 +1,54 @@
+﻿@model SliderContent
+
+<div class="col-6 grid-margin stretch-card">
+	<div class="card d-flex justify-content-center">
+		<div class="card-body">
+			<h4 class="card-title">Update Slider</h4>
+			<div asp-validation-summary="ModelOnly"></div>
+			<form class="forms-sample" method="post" enctype="multipart/form-data">
+				<div class="form-group">
+					<label asp-for="@Model.Title"></label>
+					<input type="text" class="form-control" asp-for="@Model.Title" placeholder="Title">
+				</div>
+
+				<div class="form-group">
+					<div class="input-group mb-3">
+						<div class="custom-file">
+							<input type="file" accept="image/*" class="custom-file-input" asp-for="@Model.Photo" id="sliderImage">
+							<label class="custom-file-label">Choose image</label>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label asp-for="@Model.Description"></label>
+					<textarea class="form-control" asp-for="@Model.Description" rows="4"></textarea>
+				</div>
+				<button type="submit" class="btn btn-primary mr-2">Submit</button>
+				<button class="btn btn-light">Cancel</button>
+			</form>
+			<img class="img-rounded mt-3" style="max-width:500px;" id="showSliderImage" />
+		</div>
+	</div>
+</div>
+
+
+
+@section Scripts{
+
+	<script type="text/javascript">
+		function showImage(src, target) {
+			var fr = new FileReader();
+			fr.onload = function (e) { target.src = this.result; };
+			src.addEventListener("change", function () {
+				fr.readAsDataURL(src.files[0]);
+			});
+		}
+
+		var src = document.getElementById("sliderImage");
+		var target = document.getElementById("showSliderImage");
+		showImage(src, target);
+	</script>
+	@await Html.PartialAsync("_ValidationScriptsPartial")
+
+}

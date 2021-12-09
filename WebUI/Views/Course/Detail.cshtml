@@ -1,0 +1,85 @@
+﻿@model CourseDetailDto
+
+<div class="courses-details-area blog-area pt-150 pb-140">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8">
+				<div class="courses-details">
+					<div class="courses-details-img">
+						<img src="~/assets/img/course/@Model.ImagePath" alt="courses-details">
+					</div>
+					<div class="course-details-content">
+						<h2>@Model.Title</h2>
+						<p>@Model.Description </p>
+						<div class="course-details-left">
+							<div class="single-course-left">
+								<h3>about course</h3>
+								<p>@Model.AboutCourse</p>
+							</div>
+							<div class="single-course-left">
+								<h3>how to apply</h3>
+								<p>@Model.HowToApply</p>
+							</div>
+							<div class="single-course-left">
+								<h3>certification</h3>
+								<p class="margin">@Model.Certification</p>
+							</div>
+						</div>
+						<div class="course-details-right">
+							<h3>COURSE FEATURES</h3>
+							<ul>
+								@foreach (CourseParam param in Model.CourseParams)
+								{
+									<li>@param.ParamKey <span>@param.ParamValue</span></li>
+								}
+							</ul>
+							<h3 class="red">$@Model.Price</h3>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="blog-sidebar right">
+					<div class="single-blog-widget mb-50">
+						<h3>search</h3>
+						<div class="blog-search">
+							<form id="search" action="#">
+								<input type="search" placeholder="Search..." id="input-search" name="search" />
+								<button type="submit">
+									<span><i class="fa fa-search"></i></span>
+								</button>
+								<div id="search-box" class="m-2">
+
+								</div>
+							</form>
+						</div>
+					</div>
+					@await Component.InvokeAsync("SidebarCategory")
+
+					@await Component.InvokeAsync("SidebarBlog")
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+@section Scripts{
+	<script type="text/javascript">
+		$(document).on("keyup", "#input-search", function () {
+			$("#search-box").children().remove();
+			$.ajax({
+				url: "/Home/Search/",
+				method: "POST",
+				data: {
+					"query": $("#input-search").val()
+				},
+				success: function (res) {
+					console.log(res)
+					$("#search-box").append(res)
+				}
+			})
+		})
+	</script>
+
+
+}

@@ -2,11 +2,14 @@
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation.FluentValidation;
+using Core.Extensions;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,9 +25,14 @@ namespace Business.Concrete
 		}
 
 		[ValidationAspect(typeof(CourseValidator))]
-		public IResult Add(Course course)
+		public async Task<IResult> AddAsync(Course course)
 		{
+			string folder = Path.Combine(Environment.CurrentDirectory, "wwwroot", "assets", "img", "course");
+
+			course.ImagePath = await course.Photo.SaveImageAsync(folder);
+
 			_courseDal.Add(course);
+
 			return new SuccessResult();
 		}
 
@@ -48,8 +56,34 @@ namespace Business.Concrete
 			return new SuccessDataResult<Course>(result);
 		}
 
-		public IResult Update(Course course)
+		public IDataResult<CourseDetailDto> GetCourseDetail(int id)
 		{
+			var result = _courseDal.GetCourseDetail(id);
+
+			return new SuccessDataResult<CourseDetailDto>(result);
+		}
+
+		public async Task<IDataResult<List<Course>>> SearchAsync(string query)
+		{
+			var result = await _courseDal.GetAllAsync(c => c.Title.Contains(query));
+
+			return new SuccessDataResult<List<Course>>(result);
+		}
+
+		[ValidationAspect(typeof(CourseValidator))]
+		public async Task<IResult> UpdateAsync(Course course)
+		{
+			string folder = Path.Combine(Environment.CurrentDirectory, "wwwroot", "assets", "img", "course");
+
+			var courseToUpdate = await _courseDal.GetAsync(c => c.Id == course.Id);
+
+			course.ImagePath = courseToUpdate.ImagePath;
+
+			if (course.Photo != null)
+			{
+				course.ImagePath = await course.Photo.SaveImageAsync(folder);
+			}
+
 			_courseDal.Update(course);
 			return new SuccessResult();
 		}

@@ -1,0 +1,63 @@
+﻿@model EventDetailDto
+       <!-- Event Details Start -->
+<div class="event-details-area blog-area pt-150 pb-140">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8">
+				<div class="event-details">
+					<div class="event-details-img">
+						<img src="~/assets/img/event/@Model.ImagePath" alt="event-details">
+						<div class="event-date">
+							<h3>@Model.StartTime.Day <span>@Model.StartTime.ToString("MMM")</span></h3>
+						</div>
+					</div>
+					<div class="event-details-content">
+						<h2>@Model.Title</h2>
+						<ul>
+							<li><span>time : </span>@Model.StartTime.Hour - @Model.EndTime.Hour</li>
+							<li><span>venue : </span>@Model.Venue</li>
+						</ul>
+						@Html.Raw(Model.Content)
+						<div class="speakers-area fix">
+							<h4>speakers</h4>
+							@foreach (var speaker in Model.Speakers)
+							{
+								<div class="single-speaker">
+									<div class="speaker-img">
+										<img src="~/assets/img/event/@speaker.ImagePath" alt="speaker">
+									</div>
+									<div class="speaker-name">
+										<h5>@speaker.FirstName @speaker.LastName</h5>
+									</div>
+								</div>
+							}
+
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="blog-sidebar right">
+					<div class="single-blog-widget mb-50">
+						<h3>search</h3>
+						<div class="blog-search">
+							<form id="search" action="#">
+								<input type="search" placeholder="Search..." name="search" />
+								<button type="submit">
+									<span><i class="fa fa-search"></i></span>
+								</button>
+							</form>
+						</div>
+					</div>
+
+					@await Component.InvokeAsync("SidebarCategory")
+
+					@await Component.InvokeAsync("SidebarBlog")
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Event Details End -->

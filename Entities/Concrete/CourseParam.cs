@@ -11,7 +11,7 @@ namespace Entities.Concrete
 	{
 		public int Id { get; set; }
 		public int CourseId { get; set; }
-		public string Key { get; set; }
-		public string Value { get; set; }
+		public string ParamKey { get; set; }
+		public string ParamValue { get; set; }
 	}
 }

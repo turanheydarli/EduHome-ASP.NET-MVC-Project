@@ -1,0 +1,15 @@
+﻿@model List<Category>
+
+@{
+	Layout = null;
+}
+
+<div class="single-blog-widget mb-50">
+	<h3>categories</h3>
+	<ul>
+		@foreach (Category category in Model)
+		{
+			<li><a asp-controller="course" asp-action="Index" asp-route-category="@category.Name">@category.Name</a></li>
+		}
+	</ul>
+</div>

@@ -17,6 +17,9 @@ namespace Business.DependencyResolvers.Autofac
 			builder.RegisterType<CourseManager>().As<ICourseService>();
 			builder.RegisterType<EfCourseDal>().As<ICourseDal>();
 
+			builder.RegisterType<CourseDetailManager>().As<ICourseDetailService>();
+			builder.RegisterType<EfCourseDetailDal>().As<ICourseDetailDal>();
+
 			builder.RegisterType<UserManager>().As<IUserService>();
 			builder.RegisterType<EfUserDal>().As<IUserDal>();
 
@@ -31,6 +34,12 @@ namespace Business.DependencyResolvers.Autofac
 
 			builder.RegisterType<BlogManager>().As<IBlogService>();
 			builder.RegisterType<EfBlogDal>().As<IBlogDal>();
+
+			builder.RegisterType<CategoryManager>().As<ICategoryService>();
+			builder.RegisterType<EfCategoryDal>().As<ICategoryDal>();
+
+			builder.RegisterType<EventManager>().As<IEventService>();
+			builder.RegisterType<EfEventDal>().As<IEventDal>();
 
 			builder.RegisterType<AuthManager>().As<IAuthService>();
 

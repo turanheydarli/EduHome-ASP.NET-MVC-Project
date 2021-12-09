@@ -1,0 +1,38 @@
+﻿@model List<Blog>
+
+@{
+	Layout = null;
+}
+
+@if (Model.Count() > 0)
+{
+	<div class="single-blog-widget mb-50">
+		<div class="single-blog-banner">
+			<a id="blog"><img src="~/assets/img/blog/@Model.FirstOrDefault().ImagePath" alt="blog"></a>
+			<h2>best<br> eductaion<br> theme</h2>
+		</div>
+	</div>
+}
+
+<div class="single-blog-widget mb-50">
+	<h3>latest post</h3>
+
+	@foreach (Blog blog in Model)
+	{
+		<div class="single-post mb-30">
+			<div class="single-post-img">
+				<a href="blog-details.html">
+					<img src="~/assets/img/blog/@blog.ImagePath" style="height:84px;" alt="post">
+					<div class="blog-hover">
+						<i class="fa fa-link"></i>
+					</div>
+				</a>
+			</div>
+			<div class="single-post-content">
+				<h4><a href="blog-details.html">@blog.Title</a></h4>
+				<p>@blog.Date.ToString("dd") / @blog.Date.ToString("MMM") / @blog.Date.ToString("YYYY")</p>
+			</div>
+		</div>
+	}
+</div>
+

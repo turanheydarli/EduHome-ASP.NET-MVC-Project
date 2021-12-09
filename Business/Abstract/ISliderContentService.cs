@@ -1,5 +1,6 @@
 ﻿using Core.Utilities.Results;
 using Entities.Concrete;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,8 @@ namespace Business.Abstract
 	{
 		Task<IDataResult<List<SliderContent>>> GetAllAsync();
 		Task<IDataResult<SliderContent>> GetByIdAsync(int id);
-		IResult Add(SliderContent sliderContent);
+		Task<IResult> AddAsync(SliderContent sliderContent);
 		IResult Delete(SliderContent sliderContent);
-		IResult Update(SliderContent sliderContent);
+		Task<IResult> UpdateAsync(SliderContent sliderContent);
 	}
 }

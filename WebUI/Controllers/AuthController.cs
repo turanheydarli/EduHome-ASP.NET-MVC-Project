@@ -1,7 +1,10 @@
 ﻿using Business.Abstract;
 using Core.Entities.Concrete;
+using Core.Extensions;
+using Core.Utilities.Security.JWT;
 using Entities.DTOs;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -15,9 +18,10 @@ namespace WebUI.Controllers
 	{
 		IAuthService _authService;
 		IUserService _userService;
-		public AuthController(IAuthService authService)
+		public AuthController(IAuthService authService, IUserService userService)
 		{
 			_authService = authService;
+			_userService = userService;
 		}
 		public IActionResult Login()
 		{
@@ -33,9 +37,20 @@ namespace WebUI.Controllers
 				return Content(userToLogin.Message);
 			}
 
-			var token = _authService.CreateAccessToken(userToLogin.Data);
+			var operationClaims = _userService.GetClaims(userToLogin.Data).Data;
 
-			return Ok(token.Data);
+			var claims = new List<Claim>();
+			claims.AddEmail(userToLogin.Data.Email);
+			claims.AddName($"{userToLogin.Data.FirstName} {userToLogin.Data.LastName}");
+			claims.AddNameIdentifier(userToLogin.Data.Id.ToString());
+			claims.AddRoles(operationClaims.Select(c => c.Name).ToArray());
+			
+
+			var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+			var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+			await HttpContext.SignInAsync(claimsPrincipal);
+
+			return RedirectToAction("Index", "Home");
 		}
 
 		public IActionResult Register()

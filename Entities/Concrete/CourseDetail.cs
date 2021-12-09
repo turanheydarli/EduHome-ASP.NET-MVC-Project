@@ -14,6 +14,6 @@ namespace Entities.Concrete
 		public string Content { get; set; }
 		public string AboutCourse { get; set; }
 		public string HowToApply { get; set; }
-		public string Sertification { get; set; }
+		public string Certification { get; set; }
 	}
 }

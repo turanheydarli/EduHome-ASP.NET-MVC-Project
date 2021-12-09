@@ -23,9 +23,9 @@ namespace WebUI.Controllers
 		private readonly IAuthService _authService;
 		private readonly INoticeService _noticeService;
 		private readonly ICourseService _courseService;
-		private readonly ISliderContentService  _sliderContentService;
-		private readonly IBlogService  _blogService;
-		private readonly IConfiguration  _configuration;
+		private readonly ISliderContentService _sliderContentService;
+		private readonly IBlogService _blogService;
+		private readonly IConfiguration _configuration;
 
 		public HomeController(
 			IUserService userService, IAuthService authService,
@@ -41,6 +41,7 @@ namespace WebUI.Controllers
 			_configuration = configuration;
 		}
 
+		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> Index()
 		{
 			var sliderContents = await _sliderContentService.GetAllAsync();
@@ -56,10 +57,20 @@ namespace WebUI.Controllers
 				Blogs = blogs.Data.OrderByDescending(x => x.Id).Take(3).ToList(),
 			};
 
-			
+
 			return View(viewModel);
 		}
 
-		 
+		[HttpPost]
+		public async Task<IActionResult> Search(string query)
+		{
+			SearchViewModel viewModel = new SearchViewModel
+			{
+				Courses = (await _courseService.SearchAsync(query)).Data,
+			};
+
+			return View(viewModel);
+		}
+
 	}
 }
